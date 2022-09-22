@@ -1,0 +1,110 @@
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      body{
+        background-color: #056679;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+      }
+    
+    .main{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color:#0b4e5bf0 ;
+        padding: 50px;
+        border-radius: 10px;
+    }
+    .main input{
+        border-radius: 10px;
+        height: 35px;
+        border: 1px solid #106879;
+        margin-bottom: 10px;
+        width: 200px;
+        background-color: #055565;
+        outline: none;
+       
+
+    }
+    .main button{
+         width: 100px;
+        border-radius: 10px;
+        background-color:#175258eb ;
+        height: 50px;
+        cursor: pointer;
+        box-shadow: 0 5px 7px  #13363aeb;
+        border: none;
+        opacity: 0.7;
+        z-index: 10;
+        margin-bottom: 10px;
+        
+
+    }
+    .main button:active{
+        box-shadow: 0 2px 7px #042c30e5 ;
+        background-color: #12666f6e;
+        opacity: 1;
+        z-index: 5;
+        transform: translateY(4px);
+    }
+    .main button:hover{
+        opacity: 1;
+    }
+    .main span {
+        font: status-bar;
+        margin-bottom: 20px;
+        font-size: larger;
+        font-size: 24;
+        color: #14869d;
+    }
+    .main button img{
+        width: 50px;
+        height: 50px;
+        
+    }
+    #play{
+        display: block;
+        border-radius: 50%;
+    }
+    
+
+    </style>
+</head>
+<body>
+   <div class="main">
+    <span>Enter Url</span>
+     <input  type="text">
+     <button id="button" onclick="if(input.value!=''){fetchS()}else{span.textContent='URL IS EMPTY'}">Convert
+    </button>
+    <button id="play" onclick="play()"><img src="https://img.icons8.com/ios-glyphs/344/play--v1.png"></button>
+    <audio ></audio> 
+    </div>
+
+    <script>
+        var img = document.querySelector(".main button img")
+       var input =  document.querySelector("input");
+       var span = document.querySelector(".main span")
+       var fetchS=(e)=>{
+            span.textContent="Converting..."
+            const http = new XMLHttpRequest;
+            http.onload=(r)=>{if(this.responseText!="error"){audio.src= http.responseText;console.log(this.responseText);span.textContent="Converted"}else{span,textContent="Error"}}
+            http.open("GET",`http://${window.location.hostname}/convert?url=${input.value}`)
+            http.send()
+        
+       }
+       var audio = document.querySelector("audio");
+       var newE= new Event("keypress",{key:"Enter"})
+       function play(){ if(audio.paused==true){audio.play();img.src="https://img.icons8.com/ios-glyphs/344/pause--v1.png"}else{audio.pause();img.src="https://img.icons8.com/ios-glyphs/344/play--v1.png"}}
+      
+    </script>
+</body>
+</html>

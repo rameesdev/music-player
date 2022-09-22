@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "name": "webscrapping",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
