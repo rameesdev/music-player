@@ -27,8 +27,8 @@ app.get("/convert", (req, res) => {
       .then(function (response) {
         x++;
         console.log(x + "th url converted successfully");
-        if (typeof response.data.formats[0].url !== "undefined") {
-          res.json(response.data.formats[0].url);
+        if (typeof(response.data.adaptiveFormats[17].url)!== "undefined") {
+          res.json(response.data.adaptiveFormats[17].url);
         }
       })
       .catch(function (error) {
