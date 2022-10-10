@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 100vh;
+        background-color: #414016;
+        flex-wrap: wrap;
+      }
+      .main {
+        display: flex;
+        flex-direction: row;
+        height: auto;
+      }
+      .users {
+        padding: 10px;
+        display: flex;
+        min-width: 400px;
+        background-color: #6e7a31;
+        position: relative;
+        min-height: 600px;
+        border-radius: 20px;
+        box-sizing: border-box;
+
+        max-height: 605px;
+        max-width: 410px;
+      }
+      .player {
+        padding: 10px;
+        display: flex;
+        min-width: 400px;
+        max-height: 605px;
+        max-width: 410px;
+
+        background-color: #6e7a31;
+        position: relative;
+        min-height: 600px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .imgarea {
+        background-color: #a7b987;
+        position: absolute;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 210px;
+        max-height: 210px;
+        border-radius: 50%;
+        top: 100px;
+        left: 100px;
+        box-shadow: 0.1px 4px 8px 2px rgb(0 0 0 / 10%);
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+      }
+      .imgarea img {
+        width: 210px;
+        height: 210px;
+      }
+      .controls {
+        min-width: 330px;
+        min-height: 70px;
+        background-color: #a7b98700;
+        margin-top: 40px;
+        position: absolute;
+        top: 450px;
+        left: 35px;
+        display: flex;
+        flex-direction: row;
+      }
+      .inputrangearea {
+        position: absolute;
+        top: 400px;
+        left: 40px;
+      }
+      .inputrangearea input[type="range"] {
+        width: 270px;
+        color: #414016;
+        height: 5px;
+        background: #414016;
+        -webkit-appearance: none;
+        border-radius: 4px;
+        position: relative;
+        top: 30px;
+        right: -30px;
+      }
+      .inputrangearea input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #a7b998;
+        cursor: pointer;
+        border-radius: 50%;
+        border: initial;
+      }
+      .controls button {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 27px;
+        background: rgba(0, 0, 0, 0.08);
+        box-shadow: 0.1px 8px 6px 2px rgb(49 40 40 / 39%);
+        transition: 0.2s;
+        
+      }
+      .controls button:hover {
+        background: #a7b987;
+      }
+      .controls button i {
+        font-size: 30px;
+        color: #2f2e14;
+      }
+      .songdetails {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        color: #24240f;
+        transform: translate(-50%, 50%);
+        max-width: 380px;
+        min-width: 350px;
+        max-height: 70px;
+      }
+      .songdetails h3 {
+        margin: 0;
+        text-align: center;
+      }
+      .songdetails h2 {
+        margin: 10px;
+        text-align: center;
+      }
+      .extracontrols {
+        display: flex;
+        position: absolute;
+        top: 2%;
+        right: 27%;
+      }
+      .extracontrols button {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 27px;
+        background: rgba(0, 0, 0, 0.08);
+        box-shadow: 0.1px 8px 6px 2px rgb(49 40 40 / 39%);
+        transition: 0.2s;
+        font-size: 30px;
+        color: #2f2e14;
+        justify-content: center;
+        align-items: center;
+      }
+      #toggle_plist {
+        position: absolute;
+        left: 0;
+      }
+      #toggle_plist:hover {
+        background: #a7b987;
+      }
+      button:active {
+        transform: translate(0, 2px);
+        box-shadow: 0.1px 6px 4px 2px rgb(49 40 40 / 39%);
+      }
+      .playlist {
+        width: 380px;
+        height: 5px;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        bottom: 30px;
+        right: 9px;
+
+        transition: 0.5s;
+      }
+      .active {
+        height: 490px;
+        max-height: 490px;
+        background-color: #6e7a31;
+      }
+      #plist_items {
+        display: flex;
+        text-align: left;
+        background-color: #2f2e14;
+        border-radius: 10px;
+        margin: 10px;
+        justify-content: center;
+        align-items: center;
+        max-width: 360px;
+        max-height: 60px;
+      }
+      #song_details {
+        flex: 4;
+        margin: 0;
+        padding: 10px;
+      }
+      #song_details p {
+        margin: 0;
+        color: #a7b987;
+      }
+      .plistButton {
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 27px;
+        background: #6e7a31;
+        box-shadow: 0.1px 8px 6px 2px rgb(49 40 40 / 39%);
+        transition: 0.2s;
+        font-size: 10px;
+        color: #2f2e14;
+        z-index: 10;
+      }
+      #itemAname{
+          font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="player">
+      <div class="extracontrols">
+        <button id="toggle_plist" onclick="toggle_p()">
+          <i class="fa-solid fa-list-ul"></i>
+        </button>
+      </div>
+      <div class="activepart">
+        <div class="toparea"></div>
+        <div class="imgarea">
+          <img
+            draggable="false"
+            src="https://wallpaperaccess.com/full/2481021.jpg"
+          />
+        </div>
+        <div class="songdetails">
+          <h2 id="song_name">Song Name Here</h2>
+          <h3 id="song_artist">Song Artist Name</h3>
+        </div>
+        <div class="inputrangearea">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="0.1"
+            value="0"
+            id="slider"
+          />
+        </div>
+        <div class="controls">
+          <button id="ctrl_prev" onclick="nextPrevHandler('prev')">
+            <i class="fa-solid fa-backward-step"></i>
+          </button>
+          <button id="ctrl_play" onclick="playReqHandler()">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button id="ctrl_next" onclick="nextPrevHandler('next')">
+            <i class="fa-solid fa-forward-step"></i>
+          </button>
+        </div>
+        <div id="playlist" class="playlist">
+          <!-- <div id="plist_items">
+            <div id="song_details">
+              <p id="itemSname">SONG NAME HERE</p>
+              <p id="itemAname">ARTIST NAME Here</p>
+            </div>
+            <button id="plistButton" class="plistButton" onclick="play(0)">
+              <i class="fa-solid fa-play"></i>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="users"><iframe src="/music" frameborder="0"></iframe></div>
+    <audio
+      id="mainAudio"
+      src=""
+      crossorigin="anonymous | use-credentials"
+      preload="metadata"
+    ></audio>
+
+    <script>
+      var plistItems = [];
+      var songDetails = [
+        {
+          name: "killers from the north side",
+          artist: "Saikudasai",
+          src: "files/1eTAAKDB6NIAjuVcGEF6ktFralap2nM4F",
+        },
+        {
+          name: "Secret That Nobody Knows (Slowed+Reverbed)",
+          artist: "chris brown",
+          src: "files/189G55tXwi8_G9GI0mqHqT9_oKNO4IMe5",
+        },
+        {
+          name: "murder in my mind",
+          artist: "nul",
+          src: "files/1pMKrouOcm8Q1jIL-AIz2B5LnImAUqquy",
+        },
+        {
+          name:"new test",
+          artist:"me",
+          src:"https://www.googleapis.com/drive/v2/files/1T7h8bg6lG8UJUHz9UxsdeNhWXvQ7Ir1X?key=AIzaSyCdMdqblqRy4ObnC7IFI-xTz5rjO9qS0zc&alt=media&source=downloadUrl"
+        }
+      ];
+      
+      var plistPlayPauseDetails = { prev: null, nowPlaying: null };
+      var toggle_p = () => {
+        document.querySelector("#playlist").classList.toggle("active");
+      };
+      //   setTimeout(() => {
+      //     location.reload();
+      //   }, 10000);
+      var audio = document.querySelector("#mainAudio");
+      var slider = document.querySelector("#slider");
+      var playPauseHandler = (status) => {
+        if (status == "play") {
+          document.querySelector("#ctrl_play i").className =
+            "fa-solid fa-pause";
+        }
+        if (status == "pause") {
+          document.querySelector("#ctrl_play i").className = "fa-solid fa-play";
+        }
+      };
+
+      var playReqHandler = () => {
+        if (audio.paused === true) {
+          audio.play();
+          playPauseHandler("play");
+        } else if (audio.paused === false) {
+          audio.pause();
+          playPauseHandler("pause");
+        }
+      };
+      audio.ontimeupdate = () => {
+        slider.value = (audio.currentTime * 100) / audio.duration;
+      };
+      audio.onended = () => {
+        playPauseHandler("pause");
+        plistItems[plistPlayPauseDetails.nowPlaying].className="fa-solid fa-play";
+      };
+      audio.onpause = () => {
+        playPauseHandler("pause");
+        plistItems[plistPlayPauseDetails.nowPlaying].className="fa-solid fa-play";
+      };
+      audio.onplay = () => {
+        playPauseHandler("play");
+        plistItems[plistPlayPauseDetails.nowPlaying].className="fa-solid fa-pause"
+      };
+
+      slider.oninput = () => {
+        audio.currentTime = (audio.duration * slider.value) / 100;
+      };
+      for (var i = 0; i < songDetails.length; i++) {
+        const parent = document.createElement("div");
+        parent.id = "plist_items";
+        const details = document.createElement("div");
+        details.id = "song_details";
+        const name = document.createElement("p");
+        const artist = document.createElement("p");
+        name.id = "itemSname";
+        artist.id = "itemAname";
+        name.textContent = songDetails[i].name;
+        artist.textContent = songDetails[i].artist;
+        details.appendChild(name);
+        details.appendChild(artist);
+        const button = document.createElement("button");
+        button.id = "plistButton";
+        button.className = "plistButton";
+        button.setAttribute("onclick", `play(${i})`);
+        const img = document.createElement("i");
+        img.className = "fa-solid fa-play";
+        button.appendChild(img);
+        parent.appendChild(details);
+        parent.appendChild(button);
+        plistItems[i] = img;
+        document.querySelector("#playlist").appendChild(parent);
+      }
+      var play = async (i) => {
+        if (plistPlayPauseDetails.nowPlaying != i) {
+          audio.src = songDetails[i].src;
+          
+          document.querySelector("#song_name").textContent =
+            songDetails[i].name;
+          document.querySelector("#song_artist").textContent =
+            songDetails[i].artist;
+          plistPlayPauseDetails.prev = plistPlayPauseDetails.nowPlaying;
+          plistPlayPauseDetails.nowPlaying = i;
+          if(plistPlayPauseDetails.prev!=undefined || null){plistItems[plistPlayPauseDetails.prev].className = "fa-solid fa-play";}
+          plistItems[plistPlayPauseDetails.nowPlaying].className =
+            "fa-solid fa-pause";
+          console.log(plistPlayPauseDetails);
+          await audio.play().catch(err=>console.log("err"))
+          
+        } else {
+          if (audio.paused == false) {
+            audio.pause();
+            plistItems[i].className = "fa-solid fa-play";
+          } else if (audio.paused == true) {
+            await audio.play().then(()=>{plistItems[i].className = "fa-solid fa-pause";}).catch(err=>{playReqHandler("play");plistItems[i].className = "fa-solid fa-play";});
+            
+          }
+        }
+      };
+      function nextPrevHandler(type){
+        if(type=="next"){
+          if(plistPlayPauseDetails.nowPlaying<songDetails.length-1){play(plistPlayPauseDetails.nowPlaying+1)}else if(plistPlayPauseDetails.nowPlaying=songDetails.length-1){play(0)}
+        }
+        if(type=="prev"){
+          if(plistPlayPauseDetails.nowPlaying>0){play(plistPlayPauseDetails.nowPlaying-1);}else if(plistPlayPauseDetails.nowPlaying==0){play(songDetails.length-1);}
+          
+        }
+      }
+     play( Math.floor(Math.random() * songDetails.length))
+     
+    </script>
+  </body>
+</html>

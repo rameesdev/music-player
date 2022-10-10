@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <input id="thefile" type="file" />
+    </form>
+    <button onclick="fetchS()">FETCH</button>
+
+    <script>
+      var audio = new Audio();
+      var file = document.querySelector("#thefile");
+
+      file.onchange = () => {
+        console.log("hi");
+        var files = file.files;
+
+        var data = new FormData();
+        data.append("file", files[0]);
+        data.append("user", "new");
+        console.log(data)
+        fetch("/upload", {
+          method: "POST",
+          body: data,
+        }).then((res)=>res.json()).then((res)=>{document.write(res.data);
+        console.log(res.data);});
+      };
+
+      const fetchS = (file) => {
+        var data = new FormData();
+        data.append("file", file);
+        data.append("user", "new");
+        fetch("/upload", {
+          method: "POST",
+          files: data,
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            document.write(response.data)
+          });
+      };
+    </script>
+  </body>
+</html>
