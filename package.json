@@ -13,7 +13,7 @@
     "stream-buffers": "^3.0.2"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "name": "webscrapping",
   "version": "1.0.0",
