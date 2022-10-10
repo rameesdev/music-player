@@ -68,12 +68,10 @@ drive.files.get(
     fileId: fileId,
     alt: "media"
   },
-  { responseType: "arraybuffer" },
+  { responseType: "stream" },
   function(err, { data }) {
-    fs.writeFile(__dirname+"/uploads/its working.mp3",Buffer.from(data),(err)=>{console.log(err);
-    res.sendFile(__dirname+"/uploads/its working.mp3",()=>{
-  fs.unlink(__dirname+"/uploads/its working.mp3",(err)=>console.log(err))
-})
+    pipeline(data,res,(err)=>{
+if(err){throw err;}
     })
   }
 );
@@ -102,5 +100,5 @@ app.get("/upload", (req, res) => {
 app.get('/music',(req,res)=>{
 res.sendFile(__dirname+"/public/index2.html")
 })
-
-app.listen(80, () => console.log("SERVER ON"));
+const PORT = process.env.PORT || 80;
+app.listen(PORT, () => console.log("SERVER ON"));
