@@ -69,10 +69,10 @@ drive.files.get(
     alt: "media"
   },
   { responseType: "arraybuffer" },
-  function(err, { data }) {
-    fs.writeFile(__dirname+"/uploads/its working.mp3",Buffer.from(data),(err)=>{console.log(err);
+  async function(err, { data }) {
+   await fs.writeFile(__dirname+"/uploads/its working.mp3",Buffer.from(data),(err)=>{console.log(err);
     res.sendFile(__dirname+"/uploads/its working.mp3",()=>{
-  fs.unlink(__dirname+"/uploads/its working.mp3",(err)=>console.log(err))
+  
 })
     })
   }
