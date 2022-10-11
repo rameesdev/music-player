@@ -70,9 +70,11 @@ drive.files.get(
   },
   { responseType: "arraybuffer" },
   async function(err, { data }) {
-   await fs.writeFile(__dirname+"/tmp/its working.mp3",Buffer.from(data),(err)=>{console.log(err);
-    res.sendFile(__dirname+"/tmp/its working.mp3",()=>{
-  
+    const random = (Math.random() + 1).toString(36).substring(7);
+   await fs.writeFile(__dirname+"/.tmp/"+random,Buffer.from(data),(err)=>{if(err){console.log(err)};
+    res.sendFile(__dirname+"/.tmp/"+random,()=>{
+  fs.unlink(__dirname+"/.tmp/"+random,(err)=>{console.log("done "+random);
+if(err){throw err}})
 })
     })
   }
