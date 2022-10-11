@@ -70,8 +70,8 @@ drive.files.get(
   },
   { responseType: "arraybuffer" },
   async function(err, { data }) {
-   await fs.writeFile(__dirname+"/uploads/its working.mp3",Buffer.from(data),(err)=>{console.log(err);
-    res.sendFile(__dirname+"/uploads/its working.mp3",()=>{
+   await fs.writeFile(__dirname+"/tmp/its working.mp3",Buffer.from(data),(err)=>{console.log(err);
+    res.sendFile(__dirname+"/tmp/its working.mp3",()=>{
   
 })
     })
