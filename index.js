@@ -71,9 +71,9 @@ drive.files.get(
   { responseType: "arraybuffer" },
   async function(err, { data }) {
     const random = (Math.random() + 1).toString(36).substring(7);
-   await fs.writeFile(__dirname+"/.tmp/"+random,Buffer.from(data),(err)=>{if(err){console.log(err)};
-    res.sendFile(__dirname+"/.tmp/"+random,()=>{
-  fs.unlink(__dirname+"/.tmp/"+random,(err)=>{console.log("done "+random);
+   await fs.writeFile(__dirname+"/.tmp/"+random+".mp3",Buffer.from(data),(err)=>{if(err){console.log(err)};
+    res.sendFile(__dirname+"/.tmp/"+random+".mp3",()=>{
+  fs.unlink(__dirname+"/.tmp/"+random+".mp3",(err)=>{console.log("done "+random);
 if(err){throw err}})
 })
     })
