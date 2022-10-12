@@ -8,10 +8,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v4">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Advanced Music Player</title>
     <style>
       body {
         display: flex;
@@ -45,7 +46,7 @@
         min-width: 400px;
         max-height: 605px;
         max-width: 410px;
-
+        margin-bottom: 20px;
         background-color: #6e7a31;
         position: relative;
         min-height: 600px;
@@ -248,6 +249,9 @@
       #itemAname{
           font-size: 10px;
       }
+      button{
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+      }
     </style>
   </head>
   <body>
@@ -266,8 +270,8 @@
           />
         </div>
         <div class="songdetails">
-          <h2 id="song_name">Song Name Here</h2>
-          <h3 id="song_artist">Song Artist Name</h3>
+          <h2 id="song_name"></h2>
+          <h3 id="song_artist"></h3>
         </div>
         <div class="inputrangearea">
           <input
@@ -291,51 +295,31 @@
           </button>
         </div>
         <div id="playlist" class="playlist">
-          <!-- <div id="plist_items">
-            <div id="song_details">
-              <p id="itemSname">SONG NAME HERE</p>
-              <p id="itemAname">ARTIST NAME Here</p>
-            </div>
-            <button id="plistButton" class="plistButton" onclick="play(0)">
-              <i class="fa-solid fa-play"></i>
-            </button>
-          </div> -->
         </div>
       </div>
     </div>
 
-    <div class="users"><iframe src="/music" frameborder="0"></iframe></div>
+    <!-- <div class="users"><iframe src="/music" frameborder="0"></iframe></div> -->
     <audio
       id="mainAudio"
       src=""
       crossorigin="anonymous | use-credentials"
-      preload="metadata"
+      preload="auto"
     ></audio>
 
     <script>
       var plistItems = [];
-      var songDetails = [
-        {
-          name: "killers from the north side",
-          artist: "Saikudasai",
-          src: "files/1eTAAKDB6NIAjuVcGEF6ktFralap2nM4F",
-        },
-        {
-          name: "Secret That Nobody Knows (Slowed+Reverbed)",
-          artist: "chris brown",
-          src: "files/189G55tXwi8_G9GI0mqHqT9_oKNO4IMe5",
-        },
-        {
-          name: "murder in my mind",
-          artist: "nul",
-          src: "files/1pMKrouOcm8Q1jIL-AIz2B5LnImAUqquy",
-        },
-        {
-          name:"new test",
-          artist:"me",
-          src:"https://www.googleapis.com/drive/v2/files/1T7h8bg6lG8UJUHz9UxsdeNhWXvQ7Ir1X?key=AIzaSyCdMdqblqRy4ObnC7IFI-xTz5rjO9qS0zc&alt=media&source=downloadUrl"
-        }
-      ];
+      var songDetails = [];
+      getUserData = async () =>{
+        fetch("/userdata").then(res=>res.json()).then((res)=>{
+          songDetails =res;
+          renderSong();
+          play( Math.floor(Math.random() * songDetails.length))}
+        ).catch(()=>{})
+      }
+      window.onload=()=>{
+        getUserData()
+      }
       
       var plistPlayPauseDetails = { prev: null, nowPlaying: null };
       var toggle_p = () => {
@@ -366,11 +350,13 @@
         }
       };
       audio.ontimeupdate = () => {
-        slider.value = (audio.currentTime * 100) / audio.duration;
+        slider.value = (audio.currentTime * 100) / audio.duration;if (audio.currentTime==0) {
+          slider.value=0;
+        };
       };
       audio.onended = () => {
         playPauseHandler("pause");
-        plistItems[plistPlayPauseDetails.nowPlaying].className="fa-solid fa-play";
+        plistItems[plistPlayPauseDetails.nowPlaying].className="fa-solid fa-play";if(audio.loop===false){nextPrevHandler("next")}
       };
       audio.onpause = () => {
         playPauseHandler("pause");
@@ -384,7 +370,7 @@
       slider.oninput = () => {
         audio.currentTime = (audio.duration * slider.value) / 100;
       };
-      for (var i = 0; i < songDetails.length; i++) {
+     var renderSong=()=>{for (var i = 0; i < songDetails.length; i++) {
         const parent = document.createElement("div");
         parent.id = "plist_items";
         const details = document.createElement("div");
@@ -408,7 +394,7 @@
         parent.appendChild(button);
         plistItems[i] = img;
         document.querySelector("#playlist").appendChild(parent);
-      }
+      }}
       var play = async (i) => {
         if (plistPlayPauseDetails.nowPlaying != i) {
           audio.src = songDetails[i].src;
@@ -422,8 +408,8 @@
           if(plistPlayPauseDetails.prev!=undefined || null){plistItems[plistPlayPauseDetails.prev].className = "fa-solid fa-play";}
           plistItems[plistPlayPauseDetails.nowPlaying].className =
             "fa-solid fa-pause";
-          console.log(plistPlayPauseDetails);
-          await audio.play().catch(err=>console.log("err"))
+          
+          await audio.play().catch(err=>{plistItems[plistPlayPauseDetails.nowPlaying].className="fa-solid fa-play"})
           
         } else {
           if (audio.paused == false) {
@@ -444,7 +430,7 @@
           
         }
       }
-     play( Math.floor(Math.random() * songDetails.length))
+     
      
     </script>
   </body>
