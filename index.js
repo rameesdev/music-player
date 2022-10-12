@@ -97,7 +97,7 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/home.html");
 });
 app.get("/local", (req, res) => {
-  res.sendFile(`${__dirname}/uploads/middle.mp3`);
+  res.sendFile(`${__dirname}/public/middle.mp3`);
 });
 
 app.post("/upload", (req, res) => {
