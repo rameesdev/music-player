@@ -1,21 +1,24 @@
 const express = require("express");
 const { google } = require("googleapis");
+const stream = require("stream")
 const app = express();
 const fs = require("fs");
 const upload = require("express-fileupload");
 // const { file } = require("googleapis/build/src/apis/file");
 const session = require("express-session");
-const {v4:uuidv4}=require("uuid")
-const router = require("./login.js")
-app.use(session({
-  secret:uuidv4(),
-  resave:false,
-  saveUninitialized:true
-}))
+const { v4: uuidv4 } = require("uuid");
+const router = require("./login.js");
+app.use(
+  session({
+    secret: uuidv4(),
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(upload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/",router)
+app.use("/", router);
 const CLIENT_ID =
   "301993087061-3fkiu1iivnk47amk29904mp6rqofo91e.apps.googleusercontent.com";
 
@@ -68,7 +71,7 @@ app.get("/files/:id", (req, res) => {
     { responseType: "arraybuffer" },
     async function (err, response) {
       const random = uuidv4();
-      if (typeof(response.data)!=undefined||null) {
+      if (typeof response.data != undefined || null) {
         await fs.writeFile(
           __dirname + "/.tmp/" + random + ".mp3",
           Buffer.from(response.data),
@@ -78,7 +81,6 @@ app.get("/files/:id", (req, res) => {
             }
             res.sendFile(__dirname + "/.tmp/" + random + ".mp3", () => {
               fs.unlink(__dirname + "/.tmp/" + random + ".mp3", (err) => {
-                
                 if (err) {
                   throw err;
                 }
@@ -86,8 +88,8 @@ app.get("/files/:id", (req, res) => {
             });
           }
         );
-      }else{
-        res.statusCode(404)
+      } else {
+        res.statusCode(404);
       }
     }
   );
@@ -113,4 +115,4 @@ app.get("/music", (req, res) => {
   res.sendFile(__dirname + "/public/index2.html");
 });
 const PORT = process.env.PORT || 80;
-app.listen(PORT, () => console.log("SERVER ON"));
+app.listen(PORT, () => console.log("SERVER ON AT PORT "+PORT));
