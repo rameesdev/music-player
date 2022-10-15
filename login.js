@@ -1,14 +1,19 @@
 const express = require("express");
 var router = express.Router();
 
-router.get("/login", (req, res) => {
-  if (req.query.username == "admin" && req.query.pass == "admin") {
+router.post("/login", (req, res) => {
+  if (req.body.username == "admin" && req.body.password == "admin") {
     req.session.username = "admin";
-    res.end("username : " + req.session.username);
+    res.redirect('/');
   } else {
     res.statusCode(403);
   }
 });
+
+router.get("/login",(req,res)=>{
+  res.sendFile(__dirname+"/public/login.html")
+})
+
 router.get("/check", (req, res) => {
   if (typeof req.session.username != undefined) {
     res.end(req.session.username);
@@ -40,11 +45,11 @@ router.get("/userdata",(req,res)=>{
         {
           name:"Middle Of The Night - VIOLIN",
           artist:"Elley Duhe",
-          src:"/local"
+          src:"/files/1bIWphKhGUjnZIDRjKZ15B350aimiFGuX"
         }
       ])}else{res.sendStatus(403)}
 
-      console.log(req.headers)
+      
 
 })
 module.exports = router;

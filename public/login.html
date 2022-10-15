@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOGIN</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #414016;
+      }
+      form {
+      }
+      #username {
+        margin: 10px;
+        background: #414016;
+        color: #a2b159;
+        width: 250px;
+        height: 30px;
+        font-size: large;
+      }
+      input {
+        outline: none;
+        border-radius: 8px;
+        box-shadow: 2px 1px 6px 2px #41481aa4;
+
+      }
+      #password {
+        margin: 10px;
+        background: #414016;
+        color: #a2b159;
+        width: 210px;
+        height: 30px;
+        font-size: large;
+        margin-right: 0;
+      }
+      label {
+        display: block;
+        margin: 0;
+        margin-left: 10px;
+      }
+      .main {
+        background-color: #6e7a31;
+        width: 350px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+      }
+      #show {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 10px;
+        background-color: #414016;
+        position: absolute;
+        top: 427px;
+        right: 400px;
+        box-shadow: 2px 1px 6px 2px #41481aa4;
+        border-radius: 5px;
+      }
+      #show:active{
+        box-shadow: 0 0 0 0 silver;
+        transform: translate(0px,1px)
+      }
+      h3 {
+        color: rgb(53, 86, 40);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <form method="post" action="/login">
+        <h3>This username is alerdly taken</h3>
+        <label>username</label>
+        <input id="username" type="text" name="username" />
+        <label for="password">password</label>
+        <div class="passarea">
+          <input
+            id="password"
+            type="password"
+            autocomplete="on"
+            name="password"
+          />
+          <input type="submit" style="display:none ;">
+          
+        </div>
+      </form>
+      <button id="show">
+            <i id="passwordShow" class="fa-solid fa-eye-slash"></i>
+          </button>
+    </div>
+    <script>
+      document.getElementById("show").onclick = (e) => {
+        
+        if (
+          document.getElementById("passwordShow").className ==
+          "fa-solid fa-eye-slash"
+        ) {
+          document.getElementById("passwordShow").className = "fa-solid fa-eye";
+          document.getElementById("password").type="text"
+        } else if (
+          document.getElementById("passwordShow").className == "fa-solid fa-eye"
+        ) {
+          document.getElementById("passwordShow").className =
+            "fa-solid fa-eye-slash";
+            document.getElementById("password").type="password"
+        }
+      };
+    </script>
+  </body>
+</html>

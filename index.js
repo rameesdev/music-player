@@ -27,14 +27,14 @@ const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 
 const REFRESH_TOKEN =
-  "1//043VTVtzXR9CCCgYIARAAGAQSNwF-L9IrNMywrYB3AlLXSyvOI_CMmlUKcKrBoET3WYxSWbD3COhn1-yV6HnbGj89Hi1YYvd-aYU";
+  "AIzaSyCdMdqblqRy4ObnC7IFI-xTz5rjO9qS0zc";
 
-const oauth = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
-oauth.setCredentials({ refresh_token: REFRESH_TOKEN });
+// const oauth = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+// oauth.setCredentials({ access_token: REFRESH_TOKEN });
 
 const drive = google.drive({
   version: "v3",
-  auth: oauth,
+  auth: REFRESH_TOKEN,
 });
 
 var uploadToDrive = async (data) => {
@@ -71,7 +71,7 @@ app.get("/files/:id", (req, res) => {
     { responseType: "arraybuffer" },
     async function (err, response) {
       const random = uuidv4();
-      if (typeof response.data != undefined || null) {
+      if(typeof(response) != undefined || null) {
         await fs.writeFile(
           __dirname + "/.tmp/" + random + ".mp3",
           Buffer.from(response.data),
